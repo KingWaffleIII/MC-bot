@@ -27,12 +27,14 @@ const messageCreate = {
 			""
 		);
 		await rcon.end();
-		if (res === "That player does not exist") {
-			await message.reply("That player does not exist!");
-		} else if (res === "Player is already whitelisted") {
-			await message.reply("You are already whitelisted!");
-		} else {
+		if (
+			res.toLowerCase() === `added ${ign.toLowerCase()} to the whitelist`
+		) {
 			await message.reply("You have been whitelisted!");
+		} else {
+			await message.reply(
+				"There was an error while whitelisting you. Either you are already whitelisted or your IGN is not correct. If you are on Bedrock, please try to join first and add a period to the start of your IGN."
+			);
 		}
 	},
 };
