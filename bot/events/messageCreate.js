@@ -17,13 +17,17 @@ const messageCreate = {
             port: config.rconPort,
             password: config.rconPassword,
         });
-        const res = await rcon.send(`whitelist add ${ign}`);
+        const res = (await rcon.send(`whitelist add ${ign}`)).replaceAll("/§[0-9a-f]/g", "");
         await rcon.end();
-        if (res === "Player is already whitelisted") {
-            await message.reply("You are already whitelisted!");
-            return;
+        if (res === "That player does not exist") {
+            await message.reply("That player does not exist!");
         }
-        await message.reply("You have been whitelisted!");
+        else if (res === "Player is already whitelisted") {
+            await message.reply("You are already whitelisted!");
+        }
+        else {
+            await message.reply("You have been whitelisted!");
+        }
     },
 };
 export default messageCreate;

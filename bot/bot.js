@@ -98,14 +98,14 @@ catch (error) {
 await client.login(token);
 const playerCountChannel = "1147854830874931300";
 const { rconPort, rconPassword } = config;
-const job = new CronJob("0 */10 * * * *", async () => {
+const job = new CronJob("0 * * * * *", async () => {
     const channel = await client.channels.fetch(playerCountChannel);
     const rcon = await Rcon.connect({
         host: "localhost",
         port: rconPort,
         password: rconPassword,
     });
-    const res = await rcon.send("list");
+    const res = (await rcon.send("list")).replaceAll("/§[0-9a-f]/g", "");
     await rcon.end();
     if (res[11] === " ") {
         console.log(res[10]);
