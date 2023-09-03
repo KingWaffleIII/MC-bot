@@ -17,7 +17,7 @@ const messageCreate = {
             port: config.rconPort,
             password: config.rconPassword,
         });
-        const res = (await rcon.send(`whitelist add ${ign}`)).replaceAll("/§[0-9a-f]/g", "");
+        const res = (await rcon.send(`whitelist add ${ign}`)).replaceAll(/§[0-9a-z]/gi, "");
         await rcon.end();
         if (res === "That player does not exist") {
             await message.reply("That player does not exist!");

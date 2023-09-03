@@ -105,7 +105,7 @@ const job = new CronJob("0 * * * * *", async () => {
         port: rconPort,
         password: rconPassword,
     });
-    const res = (await rcon.send("list")).replaceAll("/§[0-9a-f]/g", "");
+    const res = (await rcon.send("list")).replaceAll(/§[0-9a-z]/gi, "");
     await rcon.end();
     if (res[11] === " ") {
         console.log(res[10]);

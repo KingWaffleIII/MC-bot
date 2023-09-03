@@ -24,7 +24,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
 		password: config.rconPassword,
 	});
 
-	const res = (await rcon.send(command)).replaceAll("/§[0-9a-f]/g", "");
+	const res = (await rcon.send(command)).replaceAll(/§[0-9a-z]/gi, "");
 	await rcon.end();
 	await interaction.editReply(`\`\`\`\n${res}\n\`\`\``);
 }

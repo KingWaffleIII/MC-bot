@@ -22,7 +22,7 @@ const messageCreate = {
 		});
 
 		const res = (await rcon.send(`whitelist add ${ign}`)).replaceAll(
-			"/§[0-9a-f]/g",
+			/§[0-9a-z]/gi,
 			""
 		);
 		await rcon.end();
