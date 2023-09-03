@@ -23,12 +23,12 @@ export async function execute(interaction: ChatInputCommandInteraction) {
 
 	await interaction.deferReply();
 
-	const { client } = interaction;
+	// const { client } = interaction;
+	// if (interaction.user.id !== client.application.owner!.id) {
+	// 	await interaction.editReply("You are not permitted to use this!");
+	// 	return;
+	// }
 	const rceChannel = "1147848880768159814";
-	if (interaction.user.id !== client.application.owner!.id) {
-		await interaction.editReply("You are not permitted to use this!");
-		return;
-	}
 	if (interaction.channel!.id !== rceChannel) {
 		await interaction.editReply(
 			`This command cannot be used in this channel!`
