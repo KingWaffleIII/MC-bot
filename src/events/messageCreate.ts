@@ -9,7 +9,8 @@ const messageCreate = {
 	async execute(message: Message) {
 		if (message.author.bot) return;
 
-		const ignChannel = "1080471944085909534";
+		// const ignChannel = "1080471944085909534";
+		const ignChannel = "1147848746948886630";
 		const channel = message.channel as TextChannel;
 		if (channel.id !== ignChannel) return;
 

@@ -11,6 +11,7 @@ import {
 	Routes,
 	SlashCommandBuilder,
 	ThreadChannel,
+	VoiceChannel,
 } from "discord.js";
 import fs from "fs";
 import path, { dirname } from "path";
@@ -136,11 +137,14 @@ try {
 
 await client.login(token);
 
-const playerCountChannel = "1147854830874931300";
+// const playerCountChannel = "1147854830874931300";
+const playerCountChannel = "1147848576010027079";
 
 const { rconPort, rconPassword } = config;
-const job = new CronJob("0 * * * * *", async () => {
-	const channel = await client.channels.fetch(playerCountChannel);
+const job = new CronJob("0 */10 * * * *", async () => {
+	const channel = (await client.channels.fetch(
+		playerCountChannel
+	)) as VoiceChannel;
 
 	const rcon = await Rcon.connect({
 		host: "localhost",
@@ -152,9 +156,9 @@ const job = new CronJob("0 * * * * *", async () => {
 	await rcon.end();
 
 	if (res[11] === " ") {
-		console.log(res[10]);
+		await channel.setName(`Players: ${res[10]}`);
 	} else {
-		console.log(res[10], res[11]);
+		await channel.setName(`Players: ${res[10]}${res[11]}`);
 	}
 });
 

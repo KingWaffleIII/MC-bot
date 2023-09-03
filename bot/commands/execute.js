@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { PermissionFlagsBits, SlashCommandBuilder, } from "discord.js";
 import { Rcon } from "rcon-client";
 import config from "../config.json" assert { type: "json" };
 export const data = new SlashCommandBuilder()
@@ -7,10 +7,21 @@ export const data = new SlashCommandBuilder()
     .addStringOption((option) => option
     .setName("command")
     .setDescription("Enter the command to execute.")
-    .setRequired(true));
+    .setRequired(true))
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator);
 export async function execute(interaction) {
     const command = interaction.options.getString("command");
     await interaction.deferReply();
+    const { client } = interaction;
+    const rceChannel = "1147848880768159814";
+    if (interaction.user.id !== client.application.owner.id) {
+        await interaction.editReply("You are not permitted to use this!");
+        return;
+    }
+    if (interaction.channel.id !== rceChannel) {
+        await interaction.editReply(`This command cannot be used in this channel!`);
+        return;
+    }
     const rcon = await Rcon.connect({
         host: "localhost",
         port: config.rconPort,
