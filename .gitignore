@@ -1,0 +1,26 @@
+# IDE
+.vscode
+.history/
+.idea/
+thunder-tests/
+.eslintcache
+
+# Language-specific files
+node_modules/
+__pycache__/
+
+# DB
+postgres/
+*.sqlite3
+*.sqlite
+
+# Project
+config.json
+incomplete.txt
+
+bot/package.json
+bot/package-lock.json
+bot/RAFK.json
+bot/air_rec.json
+bot/waifus.json
+bot/assets/

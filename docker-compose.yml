@@ -1,0 +1,14 @@
+services:
+    bot:
+        container_name: creamsmp_bot
+        image: node:slim
+        volumes:
+            - ./bot/:/bot/
+            - ./package.json:/bot/package.json
+            - ./package-lock.json:/bot/package-lock.json
+            - ./src/config.json:/bot/config.json
+        working_dir: /bot
+        entrypoint: /bot/entrypoint.sh
+        network_mode: "host"
+        extra_hosts:
+            - "host.docker.internal:host-gateway"

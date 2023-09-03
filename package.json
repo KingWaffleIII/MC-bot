@@ -1,0 +1,41 @@
+{
+	"name": "creamsmp",
+	"version": "0.1.0",
+	"description": "Custom Discord bot for the CreamSMP.",
+	"main": "bot.js",
+	"type": "module",
+	"scripts": {
+		"format": "npx prettier src --write",
+		"lint": "npx eslint --cache src --ext .ts --fix",
+		"prebuild": "npm run format && npm run lint",
+		"build": "tsc",
+		"prod": "npm i && npm run build",
+		"start": "node bot.js",
+		"quickstart": "docker compose stop && npm i && tsc && docker compose up -d"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/KingWaffleIII/CreamSMP.git"
+	},
+	"author": "KingWaffleIII",
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/KingWaffleIII/CreamSMP/issues"
+	},
+	"homepage": "https://github.com/KingWaffleIII/CreamSMP#readme",
+	"dependencies": {
+		"cron": "^2.4.3",
+		"discord.js": "^14.9.0",
+		"rcon-client": "^4.2.3"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.48.2",
+		"@typescript-eslint/parser": "^5.48.2",
+		"eslint": "^8.32.0",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-config-prettier": "^8.6.0",
+		"eslint-plugin-import": "^2.27.5",
+		"prettier": "^2.8.0",
+		"typescript": "^4.9.4"
+	}
+}
