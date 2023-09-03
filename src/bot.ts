@@ -141,7 +141,7 @@ await client.login(token);
 const playerCountChannel = "1147848576010027079";
 
 const { rconPort, rconPassword } = config;
-const job = new CronJob("0 */10 * * * *", async () => {
+const job = new CronJob("0 */5 * * * *", async () => {
 	const channel = (await client.channels.fetch(
 		playerCountChannel
 	)) as VoiceChannel;
@@ -156,9 +156,9 @@ const job = new CronJob("0 */10 * * * *", async () => {
 	await rcon.end();
 
 	if (res[11] === " ") {
-		await channel.setName(`Players: ${res[10]}`);
+		await channel.setName(`Online: ${res[10]}`);
 	} else {
-		await channel.setName(`Players: ${res[10]}${res[11]}`);
+		await channel.setName(`Online: ${res[10]}${res[11]}`);
 	}
 });
 
