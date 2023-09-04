@@ -22,12 +22,17 @@ export async function execute(interaction) {
         await interaction.editReply(`This command cannot be used in this channel!`);
         return;
     }
-    const rcon = await Rcon.connect({
-        host: "localhost",
-        port: config.rconPort,
-        password: config.rconPassword,
-    });
-    const res = (await rcon.send(command)).replaceAll(/§[0-9a-z]/gi, "");
-    await rcon.end();
-    await interaction.editReply(`\`\`\`\n${res}\n\`\`\``);
+    try {
+        const rcon = await Rcon.connect({
+            host: "localhost",
+            port: config.rconPort,
+            password: config.rconPassword,
+        });
+        const res = (await rcon.send(command)).replaceAll(/§[0-9a-z]/gi, "");
+        await rcon.end();
+        await interaction.editReply(`\`\`\`\n${res}\n\`\`\``);
+    }
+    catch {
+        await interaction.editReply("An error occurred while trying to connect to the server.");
+    }
 }

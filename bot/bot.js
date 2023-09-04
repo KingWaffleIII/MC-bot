@@ -100,18 +100,23 @@ const playerCountChannel = "1147848576010027079";
 const { rconPort, rconPassword } = config;
 const job = new CronJob("0 */5 * * * *", async () => {
     const channel = (await client.channels.fetch(playerCountChannel));
-    const rcon = await Rcon.connect({
-        host: "localhost",
-        port: rconPort,
-        password: rconPassword,
-    });
-    const res = (await rcon.send("list")).replaceAll(/§[0-9a-z]/gi, "");
-    await rcon.end();
-    if (res[11] === " ") {
-        await channel.setName(`Online: ${res[10]}`);
+    try {
+        const rcon = await Rcon.connect({
+            host: "localhost",
+            port: rconPort,
+            password: rconPassword,
+        });
+        const res = (await rcon.send("list")).replaceAll(/§[0-9a-z]/gi, "");
+        await rcon.end();
+        if (res[11] === " ") {
+            await channel.setName(`Online: ${res[10]}`);
+        }
+        else {
+            await channel.setName(`Online: ${res[10]}${res[11]}`);
+        }
     }
-    else {
-        await channel.setName(`Online: ${res[10]}${res[11]}`);
+    catch {
+        await channel.setName("Online: 0");
     }
 });
 job.start();

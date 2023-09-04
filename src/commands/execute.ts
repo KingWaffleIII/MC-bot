@@ -36,13 +36,20 @@ export async function execute(interaction: ChatInputCommandInteraction) {
 		return;
 	}
 
-	const rcon = await Rcon.connect({
-		host: "localhost",
-		port: config.rconPort,
-		password: config.rconPassword,
-	});
+	try {
+		const rcon = await Rcon.connect({
+			host: "localhost",
+			port: config.rconPort,
+			password: config.rconPassword,
+		});
 
-	const res = (await rcon.send(command)).replaceAll(/§[0-9a-z]/gi, "");
-	await rcon.end();
-	await interaction.editReply(`\`\`\`\n${res}\n\`\`\``);
+		const res = (await rcon.send(command)).replaceAll(/§[0-9a-z]/gi, "");
+		await rcon.end();
+
+		await interaction.editReply(`\`\`\`\n${res}\n\`\`\``);
+	} catch {
+		await interaction.editReply(
+			"An error occurred while trying to connect to the server."
+		);
+	}
 }
