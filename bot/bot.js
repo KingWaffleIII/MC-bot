@@ -39,6 +39,20 @@ for (const file of commandFiles) {
         console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
     }
 }
+const eventsPath = path.join(__dirname, "events");
+const eventFiles = fs
+    .readdirSync(eventsPath)
+    .filter((file) => file.endsWith(".js"));
+for (const file of eventFiles) {
+    const filePath = path.join(eventsPath, file);
+    const event = (await import(filePath)).default;
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args));
+    }
+    else {
+        client.on(event.name, (...args) => event.execute(...args));
+    }
+}
 client.on(Events.ClientReady, async (bot) => {
     console.log(`Bot is ready, logged in as ${bot.user.tag}!`);
 });
