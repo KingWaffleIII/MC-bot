@@ -39,19 +39,6 @@ for (const file of commandFiles) {
         console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
     }
 }
-// const eventsPath = path.join(__dirname, "events");
-// const eventFiles = fs
-// 	.readdirSync(eventsPath)
-// 	.filter((file) => file.endsWith(".js"));
-// for (const file of eventFiles) {
-// 	const filePath = path.join(eventsPath, file);
-// 	const event = (await import(filePath)).default;
-// 	if (event.once) {
-// 		client.once(event.name, (...args) => event.execute(...args));
-// 	} else {
-// 		client.on(event.name, (...args) => event.execute(...args));
-// 	}
-// }
 client.on(Events.ClientReady, async (bot) => {
     console.log(`Bot is ready, logged in as ${bot.user.tag}!`);
 });
@@ -95,9 +82,7 @@ catch (error) {
     console.error(error);
 }
 await client.login(token);
-// const playerCountChannel = "1147854830874931300";
-const playerCountChannel = "1147848576010027079";
-const { rconPort, rconPassword } = config;
+const { rconPort, rconPassword, playerCountChannel } = config;
 const job = new CronJob("0 */5 * * * *", async () => {
     const channel = (await client.channels.fetch(playerCountChannel));
     try {

@@ -1,7 +1,7 @@
 {
-	"name": "creamsmp",
-	"version": "1.2.1",
-	"description": "Custom Discord bot for the CreamSMP.",
+	"name": "mc-bot",
+	"version": "2.0.0",
+	"description": "Custom Discord bot for Minecraft servers.",
 	"main": "bot.js",
 	"type": "module",
 	"scripts": {
@@ -11,18 +11,18 @@
 		"build": "tsc",
 		"prod": "npm i && npm run build",
 		"start": "node bot.js",
-		"quickstart": "docker compose stop && npm i && tsc && docker compose up -d"
+		"quickstart": "docker compose stop && npm i && tsc && docker compose up"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/KingWaffleIII/CreamSMP.git"
+		"url": "git+https://github.com/KingWaffleIII/MC-bot.git"
 	},
 	"author": "KingWaffleIII",
 	"license": "GPL-3.0",
 	"bugs": {
-		"url": "https://github.com/KingWaffleIII/CreamSMP/issues"
+		"url": "https://github.com/KingWaffleIII/MC-bot/issues"
 	},
-	"homepage": "https://github.com/KingWaffleIII/CreamSMP#readme",
+	"homepage": "https://github.com/KingWaffleIII/MC-bot#readme",
 	"dependencies": {
 		"cron": "^2.4.3",
 		"discord.js": "^14.9.0",
