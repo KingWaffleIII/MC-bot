@@ -1,6 +1,6 @@
 services:
     bot:
-        container_name: creamsmp_bot
+        container_name: mc_bot #! change this
         image: node:slim
         volumes:
             - ./bot/:/bot/
