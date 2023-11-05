@@ -3,16 +3,17 @@ import { Rcon } from "rcon-client";
 
 import config from "../config.json" assert { type: "json" };
 
-const messageCreate = {
-	name: Events.MessageCreate,
+const messageUpdate = {
+	name: Events.MessageUpdate,
 	once: false,
-	async execute(message: Message) {
-		if (message.author.bot) return;
+	async execute(oldMessage: Message, newMessage: Message) {
+		if (newMessage.author.bot) return;
 
-		const channel = message.channel as TextChannel;
+		const channel = newMessage.channel as TextChannel;
 		if (channel.id !== config.ignChannel) return;
 
-		const ign = message.content;
+		const oldIgn = oldMessage.content;
+		const newIgn = newMessage.content;
 
 		let rcon;
 		try {
@@ -23,30 +24,33 @@ const messageCreate = {
 			});
 		} catch (error) {
 			console.error(error);
-			await message.reply(
+			await newMessage.reply(
 				"The server is not responding at the moment, please try again later."
 			);
 			return;
 		}
 
-		const res = (await rcon.send(`whitelist add ${ign}`)).replaceAll(
+		await rcon.send(`whitelist remove ${oldIgn}`);
+
+		const res = (await rcon.send(`whitelist add ${newIgn}`)).replaceAll(
 			/§[0-9a-z]/gi,
 			""
 		);
 		await rcon.end();
 		if (
-			res.toLowerCase() === `added ${ign.toLowerCase()} to the whitelist`
+			res.toLowerCase() ===
+			`added ${newIgn.toLowerCase()} to the whitelist`
 		) {
-			await message.reply("You have been whitelisted!");
+			await newMessage.reply("Your new account has been whitelisted!");
 		} else {
-			await message.reply(
+			await newMessage.reply(
 				"There was an error while whitelisting you. Either you are already whitelisted or your IGN is not correct. If you are on Bedrock, please try to join first and add a period to the start of your IGN."
 			);
 		}
 
 		if (config.nicknameEdit) {
 			try {
-				await message.member?.setNickname(ign);
+				await newMessage.member?.setNickname(newIgn);
 			} catch (error) {
 				console.error(error);
 			}
@@ -54,4 +58,4 @@ const messageCreate = {
 	},
 };
 
-export default messageCreate;
+export default messageUpdate;

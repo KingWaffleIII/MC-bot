@@ -18,15 +18,19 @@ Create `src/config.json` like so:
 {
 	"token": "<DISCORD BOT TOKEN HERE>",
 	"clientId": "<DISCORD BOT ID HERE>",
-	"rconPort": <RCON PORT HERE>,
+	"rconHost": "<IP ADDRESS HERE>",
+ 	"rconPort": <RCON PORT HERE>,
     "rconPassword": "<RCON PASSWORD HERE>",
     "playerCountChannel": "<DISCORD CHANNEL ID HERE>",
 	"ignChannel": "<DISCORD CHANNEL ID HERE>",
 	"rceChannel": "<DISCORD CHANNEL ID HERE>",
+	"nicknameEdit": false,  // requires "Manage Nicknames" permission
 }
 
 ```
 
-To disable any of these features, set the value to `""`.
+To disable any of these features, set the value to `""` or.
 
 Then run the bot with Docker Compose.
+
+Note: if you are running multiple instances of the bot on the same host, make sure to change the container name in `docker-compose.yml` to avoid conflicts.

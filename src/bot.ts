@@ -137,15 +137,16 @@ try {
 
 await client.login(token);
 
-const { rconPort, rconPassword, playerCountChannel } = config;
+const { rconHost, rconPort, rconPassword, playerCountChannel } = config;
 const job = new CronJob("0 */5 * * * *", async () => {
+	if (playerCountChannel === "") return;
 	const channel = (await client.channels.fetch(
 		playerCountChannel
 	)) as VoiceChannel;
 
 	try {
 		const rcon = await Rcon.connect({
-			host: "localhost",
+			host: rconHost,
 			port: rconPort,
 			password: rconPassword,
 		});

@@ -11,11 +11,19 @@ const messageCreate = {
         if (channel.id !== config.ignChannel)
             return;
         const ign = message.content;
-        const rcon = await Rcon.connect({
-            host: "localhost",
-            port: config.rconPort,
-            password: config.rconPassword,
-        });
+        let rcon;
+        try {
+            rcon = await Rcon.connect({
+                host: config.rconHost,
+                port: config.rconPort,
+                password: config.rconPassword,
+            });
+        }
+        catch (error) {
+            console.error(error);
+            await message.reply("The server is not responding at the moment, please try again later.");
+            return;
+        }
         const res = (await rcon.send(`whitelist add ${ign}`)).replaceAll(/§[0-9a-z]/gi, "");
         await rcon.end();
         if (res.toLowerCase() === `added ${ign.toLowerCase()} to the whitelist`) {
@@ -23,6 +31,14 @@ const messageCreate = {
         }
         else {
             await message.reply("There was an error while whitelisting you. Either you are already whitelisted or your IGN is not correct. If you are on Bedrock, please try to join first and add a period to the start of your IGN.");
+        }
+        if (config.nicknameEdit) {
+            try {
+                await message.member?.setNickname(ign);
+            }
+            catch (error) {
+                console.error(error);
+            }
         }
     },
 };
